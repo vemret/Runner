@@ -6,24 +6,37 @@
 //
 
 import UIKit
+import MapKit
 
-class LocationViewController: UIViewController {
+class LocationViewController: UIViewController, MKMapViewDelegate {
 
+    var manager : CLLocationManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        manager = CLLocationManager()
+        manager?.desiredAccuracy = kCLLocationAccuracyBest
+//        koşu için fitness seçildi. manager ona göre takip edecek
+        manager?.activityType = .fitness
 
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+//    Eğer kunum izni verilmemişse tekrar iste
+    func permissionCtrl(){
+        
+//        ios 14 ile gelen günceleme için        
+        if #available(iOS 14.0, *) {
+            if CLLocationManager().authorizationStatus != .authorizedWhenInUse{
+                manager?.requestWhenInUseAuthorization()
+            }
+        } else {
+            if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+                manager?.requestWhenInUseAuthorization()
+            }
+        }
+        
     }
-    */
 
 }

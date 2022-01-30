@@ -6,3 +6,5 @@
 //
 
 import Foundation
+
+let REALM_QUERY = DispatchQueue(label: "realmQuery")
